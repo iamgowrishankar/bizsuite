@@ -6,15 +6,18 @@ final class Tenant
 {
     private string $id;
     private string $name;
+    private string $host;
     private bool $active;
 
     public function __construct(
         string $id,
         string $name,
+        string $host,
         bool $active = true
     ) {
         $this->id = $id;
         $this->name = $name;
+        $this->host = $host;
         $this->active = $active;
     }
 
@@ -36,5 +39,10 @@ final class Tenant
     public function deactivate(): void
     {
         $this->active = false;
+    }
+
+    public function host(): string
+    {
+        return $this->host;
     }
 }

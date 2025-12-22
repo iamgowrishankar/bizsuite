@@ -20,8 +20,11 @@ class EloquentTenantRepository implements TenantRepository
 
     public function findByHost(string $host): ?Tenant
     {
-        // placeholder (will be implemented later)
-        return null;
+        $model = TenantModel::where('host', $host)->first();
+
+        return $model
+            ? TenantMapper::toDomain($model)
+            : null;
     }
 
     public function save(Tenant $tenant): void

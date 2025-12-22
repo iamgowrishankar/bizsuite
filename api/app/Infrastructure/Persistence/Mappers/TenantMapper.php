@@ -12,6 +12,7 @@ class TenantMapper
         return new Tenant(
             $model->id,
             $model->name,
+            $model->host,
             $model->active
         );
     }

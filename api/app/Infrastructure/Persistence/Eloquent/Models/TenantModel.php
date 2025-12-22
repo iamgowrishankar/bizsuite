@@ -14,6 +14,7 @@ class TenantModel extends Model
     protected $fillable = [
         'id',
         'name',
+        'host',
         'active',
     ];
 
