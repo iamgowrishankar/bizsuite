@@ -41,5 +41,16 @@ services:
     ports:
       - "6380:6379"
 
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: bizsuite_phpmyadmin
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+    depends_on:
+      - mysql
+
 volumes:
   mysql_data:
