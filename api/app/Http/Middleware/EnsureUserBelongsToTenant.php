@@ -5,10 +5,11 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use App\Application\Tenant\TenantContext;
+use Symfony\Component\HttpFoundation\Response;
 
 class EnsureUserBelongsToTenant
 {
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): Response
     {
         $user = $request->user();
         $tenant = TenantContext::get();

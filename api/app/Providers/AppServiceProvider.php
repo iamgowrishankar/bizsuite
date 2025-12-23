@@ -17,7 +17,10 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(
             TenantRepository::class,
-            EloquentTenantRepository::class,
+            EloquentTenantRepository::class
+        );
+
+        $this->app->bind(
             UserRepository::class,
             EloquentUserRepository::class
         );
