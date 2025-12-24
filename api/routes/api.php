@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Invoice\CreateInvoiceController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/login', LoginController::class);
@@ -19,4 +20,8 @@ Route::middleware(['auth:sanctum', 'tenant.user'])->group(function () {
             'tenant_id' => request()->user()->tenant_id,
         ]);
     });
+});
+
+Route::middleware(['auth:sanctum', 'tenant.user'])->group(function () {
+    Route::post('/invoices', CreateInvoiceController::class);
 });

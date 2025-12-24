@@ -6,6 +6,7 @@ use App\Domain\Auth\Contracts\UserRepository;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use App\Application\Tenant\TenantContext;
+use App\Infrastructure\Persistence\Eloquent\Models\UserModel;
 
 class LoginUser
 {
@@ -15,7 +16,12 @@ class LoginUser
 
     public function execute(string $email, string $password): string
     {
-        $user = $this->users->findByEmail($email);
+        $tenant = TenantContext::get();
+
+        $user = $this->users->findByEmailAndTenant(
+            $email,
+            $tenant->id()
+        );
 
         if (!$user) {
             throw ValidationException::withMessages([
@@ -23,16 +29,9 @@ class LoginUser
             ]);
         }
 
-        // Tenant boundary check
-        $tenant = TenantContext::get();
-        if ($user->tenantId() !== $tenant->id()) {
-            throw ValidationException::withMessages([
-                'email' => 'User does not belong to this tenant',
-            ]);
-        }
-
-        // Password check (delegated to infra later)
-        $model = \App\Infrastructure\Persistence\Eloquent\Models\UserModel::where('email', $email)->first();
+        $model = \App\Infrastructure\Persistence\Eloquent\Models\UserModel::where('email', $email)
+            ->where('tenant_id', $tenant->id())
+            ->first();
 
         if (!Hash::check($password, $model->password)) {
             throw ValidationException::withMessages([

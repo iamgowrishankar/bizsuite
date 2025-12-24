@@ -12,7 +12,8 @@ class UserMapper
         return new User(
             $model->id,
             $model->email,
-            $model->tenant_id
+            $model->tenant_id,
+            $model->role
         );
     }
 }

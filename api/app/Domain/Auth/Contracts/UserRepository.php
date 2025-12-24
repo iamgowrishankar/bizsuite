@@ -6,5 +6,5 @@ use App\Domain\Auth\Entities\User;
 
 interface UserRepository
 {
-    public function findByEmail(string $email): ?User;
+    public function findByEmailAndTenant(string $email, string $tenantId): ?User;
 }

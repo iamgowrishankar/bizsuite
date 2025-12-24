@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Domain\Auth\Contracts\UserRepository;
+use App\Domain\Invoice\Contracts\InvoiceRepository;
 use App\Domain\Tenant\Contracts\TenantRepository;
+use App\Infrastructure\Persistence\Eloquent\Repositories\EloquentInvoiceRepository;
 use App\Infrastructure\Persistence\Eloquent\Repositories\EloquentTenantRepository;
 use App\Infrastructure\Persistence\Eloquent\Repositories\EloquentUserRepository;
 use Illuminate\Support\ServiceProvider;
@@ -23,6 +25,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             UserRepository::class,
             EloquentUserRepository::class
+        );
+
+        $this->app->bind(
+            InvoiceRepository::class,
+            EloquentInvoiceRepository   ::class
         );
     }
 
