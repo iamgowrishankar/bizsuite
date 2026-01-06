@@ -2,9 +2,11 @@
 
 namespace App\Application\Invoice;
 
+use App\Events\InvoiceCreated;
 use App\Domain\Invoice\Contracts\InvoiceRepository;
 use App\Domain\Invoice\Entities\Invoice;
 use App\Application\Tenant\TenantContext;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
 
 class CreateInvoice
@@ -25,5 +27,7 @@ class CreateInvoice
         );
 
         $this->invoices->save($invoice);
+
+        Event::dispatch(new InvoiceCreated($invoice));
     }
 }
